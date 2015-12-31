@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+{{ sub_name }}
+<ul>
+{% for p in sub %}
+    {% for post in p.Postcategory.all %}
+    <li>{{ post.title }}</li>
+    {% endfor %}
+{% endfor %}
+</ul>
+{% endblock %}

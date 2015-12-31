@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+{% block header %}
+<div class="page-header">
+            <div>
+            <ul>
+                <li><a href="/faq/">Вопросы и ответы</a></li>
+                <li><a href="/howitworks/">Как это работает</a></li>
+                <li><a href="/delivery/">Доставка</a></li>
+                <li><a style="border-right: none" href="/company/">О компании</a></li>
+            </ul>
+                <ul class="ul-right">
+                    <li><a href="accounts/login/"><strong>{{ full_name }}</strong></a></li>
+                    <li><a href="accounts/cabinet/">Личный кабинет</a></li>
+                    <li><a style="border-right: none" href="/accounts/logout/">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+{% endblock %}
+{% block content %}
+
+    <h2>Hi {{full_name}} logged in!</h2>
+    <p>Click <a href="/accounts/logout/">here</a> to logout.</p>
+
+{% endblock %}

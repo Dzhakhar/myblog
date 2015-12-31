@@ -1,0 +1,204 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html ng-app="myApp" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My first blog on Django</title>
+  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+  <!--<link rel="stylesheet" href="../../static/css/bootstrap.min.css">-->
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dropdown-menu.css' %}">
+  <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script>
+        theTime = new Date();
+        theHour = theTime.getHours();
+        theMinute = theTime.getMinutes();
+        console.log('sdfsf');
+        console.log(theHour);
+        $(document).ready(function(){
+            if (theHour >= 7 && theHour <= 18) {
+                console.log('if');
+                $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-1.png)');
+            } else {
+                $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-2.png)');
+            }
+        });
+    </script>
+</head>
+<body>
+        {% block header %}
+        {% if user.is_authenticated %}
+        <div class="page-header">
+            <div>
+            <ul>
+                <li><a href="/faq/">Вопросы и ответы</a></li>
+                <li><a href="/howitworks/">Как это работает</a></li>
+                <li><a href="/delivery/">Доставка</a></li>
+                <li><a style="border-right: none" href="/company/">О компании</a></li>
+
+            </ul>
+                <ul class="ul-right">
+                    <a href="" class="cart"><img src="{% static 'images/cart.png' %}" alt=""><span class="cart_count">1200</span></a>
+                    <li><a href="/accounts/login/"><strong>{{ user }}</strong></a></li>
+                    <li><a href="/accounts/cabinet/">Кабинет</a></li>
+                    <li><a style="border-right: none" href="/accounts/logout/">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+        {% else %}
+        <div class="page-header">
+            <div>
+            <ul>
+                <li><a href="">Вопросы и ответы</a></li>
+                <li><a href="">Как это работает</a></li>
+                <li><a href="">Доставка</a></li>
+                <li><a style="border-right: none" href="">О компании</a></li>
+            </ul>
+                <ul class="ul-right">
+                    <li><a href="/accounts/login/">Войти</a></li>
+                    <li><a style="border-right: none" href="/accounts/register/">Зарегистрироваться</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <div class="wrapper1">
+            <div class="logo">
+                <h1><strong>LOGO</strong></h1>
+            </div>
+            <div class="search">
+                <div class="triangle triangle-4" style="z-index: 40;"></div>
+                {% csrf_token %}
+                <input type="search" placeholder="Поиск по акциям" id="search" name='search'>
+                <div class="search-results">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+        </div>
+        <div style="width: 1080px; margin: 10px auto;" class="banner1"><img width="1080px" src="{% static 'images/222.jpg' %}" alt=""></div>
+        {% endblock %}
+         <!-- dropdown menu -->
+<div id="container">
+    <nav>
+        <ul>
+            {% for cat in category %}
+            <li><a  href="#" title="{{ cat }}" class="category">{{ cat.name }}</a><!-- First Tier Drop Down -->
+            {% if cat.sub.all %}
+            <div class="submenu">
+                <ul>
+                    {% for sub in cat.sub.all %}
+                    <li><a href="/post/sub/{{ sub.name }}">{{ sub.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+
+        <!-- end dropdown menu -->
+        <div class="content container">
+                {% block content %}
+                    {% load thumbnail %}
+<!-- for post in posts -->
+        <ul class="ul-catalog">
+            {% for post in posts %}
+            <li class="col-md-4 products">
+                <a href="{% url 'post_detail' pk=post.pk %}">
+
+                    {% thumbnail post.post_image "333x215" crop="center" as im %}
+                    <div class="postimage" style="background-image: url({{ im.url }});">
+                    {% empty %}
+                    <div class="postimage" style="background-image: url(http://placehold.it/333x215);">
+                    {% endthumbnail %}
+                        <div class="prices row">
+                            {% if post.past_price %}
+                            <div class="pastprice"><strike>{{ post.past_price }}</strike></div>
+                            {% else %}
+                            <div class="pastprice" style="display: none;"><strike>{{ post.past_price }}</strike></div>
+                            {% endif %}
+                            <div class="price">{{ post.price }}</div>
+                            <div class="more"><a href="{% url 'post_detail' pk=post.pk %}">Подробнее</a></div>
+                        </div>
+                        <div class="likes"><a class="likeit" style="cursor: pointer; display: block;">Like</a><p class="likecount">{{ post.likes.all|length }}</p></div>
+
+                    </div>
+
+                    <div class="productinfo">
+                        <span class="productname">{{ post.title }}</span><br>
+                        <p class="productdescr">{{ post.short_text }}</p>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+                {% endblock %}
+        </div>
+                {% block postslider %}
+                {% endblock %}
+                {% block postcontent %}
+                {% endblock %}
+        <div id="top-link">
+            <span></span>
+	        <a href="#top">наверх</a>
+        </div>
+    <script src="{% static 'js/button.js' %}"></script>
+    <script>
+
+//        $('.more').mouseover(function(){
+//            $('.mydiv').load('/post/1/ .short', function(){
+//                console.log('load');
+//            });
+//        });
+//        $('.more').mouseout(function(){
+//            $('.mydiv').html('');
+//        });
+//
+
+
+//        var elem = $('.mydiv').offset();
+//        console.log(elem.left);
+//        $('.mydiv').offset({top:80, left: elem.left + 100});
+//        console.log($('.mydiv').offset());
+//        console.log(elem.left);
+
+//        $(document).mousemove(function(e){
+//            $('*').css('transition', '1s');
+//            var X = e.pageX;
+//            var Y = e.pageY;
+//            var elem = $('.mydiv');
+//            elemWidth = parseInt(elem.css('width'));
+//            elemHeight = parseInt(elem.css('height'));
+//            elem.offset({top: Y, left: X});
+////            console.log("X: " + X + ", Y: " + Y);
+//        })
+
+//        $('.likeit').click(function(){
+//            $(".likeit").toggle(
+//            showOrHide = true,
+//            function(){
+//            console.log('d');
+//            var likes = parseInt($('.likecount').html());
+//            console.log('ewr');
+//            $(this).load('/post/like/1');
+//            parseInt($('.likecount').html(likes + 1));
+//        },
+//        function(){
+//            var likes = parseInt($('.likecount').html());
+//            $(this).load('/post/like/1');
+//            parseInt($('.likecount').html(likes - 1));
+//        });
+//        })
+
+
+    </script>
+    <script src="{% static 'js/ajax.js' %}"></script>
+    <script src="{% static 'js/category.js' %}"></script>
+    <script src="{% static 'js/controller.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% extends 'blog/base.html' %}
+{% csrf_token %}
+{% load angular_utils %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block postslider %}
+    <div class="sliderwrapper">
+    <div class="sliderwrapper__header">
+        <p>{{ post.title }} - {{ post.short_text }}</p>
+    </div>
+    <span style="font-size: 20px; display: inline-block; margin-top: 10px; margin-bottom: 10px;">{{ post.title }} - {{ post.short_text }}</span>
+    <div class="slider" style="display: inline-block; overflow: hidden; width: 560px; height: 300px;">
+        <ul class="ulslider" style="left: 0; padding: 0; margin: 0; height: 300px; width: 560px; position: relative; ">
+            <li class="lislider active_li" style="position: absolute; left: 0; top: 0; bottom: 0; right: 0; width: 560px; height: 300px; margin: 0; padding: 0; display: inline-block; background-image: url(http://placehold.it/560x301)"></li>
+            <li class="lislider" style="position: absolute; left: 0; top: 0; bottom: 0; right: 0; width: 560px; height: 300px; margin: 0; padding: 0; display: inline-block; background-image: url(http://placehold.it/560x302)"></li>
+            <li class="lislider" style="position: absolute; left: 0; top: 0; bottom: 0; right: 0; width: 560px; height: 300px; margin: 0; padding: 0; display: inline-block; background-image: url(http://placehold.it/560x303)"></li>
+        </ul>
+        <span class="prev" style="position: relative; top: -30px; cursor: pointer;"><img src="{% static 'icons/ic_keyboard_arrow_left_black_18dp_1x.png' %}" alt=""></span>
+        <span class="next" style="position: relative; top: -30px; right: 5px; cursor: pointer;"><img src="{% static 'icons/ic_keyboard_arrow_right_black_18dp_1x.png' %}" alt=""></span>
+    </div>
+    <div class="add_to_cart" style="display: inline-block; text-align: center; position: absolute; top: 85px; right: 20px; width: 420px;" ng-controller="myCtrl" ng-init="myCtrl.init({{ post.price }})">
+        <div class="post_price" style="font-size: 45px; font-weight: bold;">{[{ amount * {{ post.price }} }]}</div>
+        <form ng-init=\"myPath = '/add_to_cart/{{ post.id }}/' + {[{ amount }]} \" action='{[{ myPath }]}'>
+            <div style="display: inline-block;" class="quant"><input type="number" ng-model="amount" value="1" title="Введите число от 1 до 10" required min="1" max="10" style="padding-left: 4px; border-radius: 4px; width: 50px; outline: none; border: 2px solid #F38181; height: 20px; line-height: 20px;"></div>
+            <input type="submit" value="В корзину" class="add_to_cart_link"></input>
+        </form>
+    </div>
+    </div>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block postcontent %}
+    <div class="postcontent">
+        <div class="postcontent__header"></div>
+        <div class="postdescription">
+            {{ post.text | safe  }}
+        </div>
+    </div>
+    {% endblock %}
+    <script>
+//        var ulChildren = ($('.ulslider').children().toArray());
+//        var itemsArray = [];
+//            for(i = 0; i < ulChildren.length; i++){
+//                itemsArray.push(ulChildren[i]);
+//            }
+//        console.log(ulChildren);
+//        console.log(itemsArray);
+//
+//        $('.prev').click(function(){
+//            console.log("qwwqd");
+//            if(('lislider active_li') == ulChildren[0].className){
+//
+//            } else {
+//                for(i = 0; i < ulChildren.length; i++){
+//                    if(ulChildren[i].className == 'lislider active_li'){
+//                        var active = ulChildren[i];
+//                    }
+//                }
+//                $(ulChildren[indexoftive+1]).addClass('active_li');
+//                $(ulChildren[active+1]).addClass('active_li');
+//            }
+//
+//        })
+    </script>
+
+<!--  use0 thumbnail -->

@@ -24,6 +24,7 @@ SECRET_KEY = '^o!btb=g)r7__kx48we97#ukypl+-0-zor&cw4x5ss$rz_mdg2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +39,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'sorl.thumbnail',
+    'ckeditor',
+    'location_field',
+    'cart',
 )
+
+THUMBNAIL_DEBUG = True
+import logging
+from sorl.thumbnail.log import ThumbnailLogHandler
+
+handler = ThumbnailLogHandler()
+handler.setLevel(logging.DEBUG)
+logging.getLogger('sorl.thumbnail').addHandler(handler)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context.categories',
             ],
         },
     },
@@ -102,3 +116,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CART_PRODUCT_MODEL = 'blog.models.Post'

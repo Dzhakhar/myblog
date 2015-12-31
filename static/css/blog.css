@@ -1,0 +1,356 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600italic,600,700italic,700,800,800italic&subset=latin,cyrillic-ext,cyrillic,latin-ext);
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background: url(http://localhost:8000/static/images/Untitled-2.png);
+    padding: 0;
+    margin: 0;
+}
+
+.page-header {
+      background-color: #F38181;
+      margin-top: 0;
+  }
+
+.page-header div {
+    position: relative;
+    width: 1080px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.page-header div .cart {
+    position: absolute;
+    right: 180px;
+    top: 12px;
+}
+
+.page-header div .cart:hover {
+    color: #fff !important;
+}
+
+.cart_count {
+    background: #2B2E4A;
+    padding: 3px 5px 3px 5px;
+    -webkit-border-radius:9px;
+    -moz-border-radius:9px;
+    border-radius:9px;
+    display: inline-block;
+    text-align: center;
+    margin-top: -10px;
+    min-width: 40px;
+    max-width: 150px;
+    position: absolute;
+    right: 30px;
+    top: 12px;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 1px 2px 0px #333;
+    -moz-box-shadow: 0px 1px 2px 0px #333;
+    box-shadow: 0px 1px 2px 0px #333;
+}
+
+.ul-right {
+    float: right;
+}
+
+.page-header div ul {
+    display: inline-block;
+}
+
+.page-header div ul li {
+    display: inline-block;
+}
+
+.page-header div ul li a {
+    display: inline-block;
+    border-right: 1px solid #2B2E4A;
+    padding-right: 10px;
+    padding-left: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 65%;
+}
+
+  .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+      text-decoration: none;
+  }
+
+  .content {
+      margin-left: 40px;
+  }
+
+  h1, h2, h3, h4 {
+      font-family: 'Lobster';
+  }
+
+  .date {
+      float: right;
+      color: #828282;
+  }
+
+  .save {
+      float: right;
+  }
+
+  .post-form textarea, .post-form input {
+      width: 100%;
+  }
+
+  .top-menu, .top-menu:hover, .top-menu:visited {
+      color: #ffffff;
+      float: right;
+      font-size: 26pt;
+      margin-right: 20px;
+  }
+
+  .post {
+      border: 2px solid #333;
+      margin: 5px;
+      height: 300px;
+  }
+
+  .post h1 a, .post h1 a:visited {
+      color: #000000;
+  }
+
+  .postimage {
+    position: relative;
+  }
+
+  li {
+      list-style: none;
+  }
+
+a {
+    color: #333333;
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+    color: #333333;
+}
+
+.content {
+    overflow: hidden;
+    background: #fff;
+    width: 1080px;
+    margin: 10px auto;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    /*padding-top: 10px;*/
+}
+
+.ul-catalog {
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 4px 20px;
+}
+
+.products {
+    height: 330px;
+    padding: 0;
+    margin: 5px;
+    overflow: hidden;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.postimage {
+    overflow: hidden;
+    height: 215px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    width: 333px;
+}
+
+.prices {
+    -webkit-border-radius: 0 0 9px 9px;
+    -moz-border-radius: 0 0 9px 9px;
+    border-radius: 0 0 9px 9px;
+    padding: 5px;
+    background: rgba(3, 4, 3, 0.66);
+    font-weight: 500;
+    position: absolute;
+    top: 165px;
+    width: 323px;
+    margin-left: 0px;
+}
+
+.pastprice {
+    padding: 10px;
+    color: #fff;
+
+}
+
+.price {
+    padding: 10px 0 10px 3px;
+    color: #E84545;
+    font-weight: bold;
+}
+
+
+.price, .pastprice, .more {
+    display: inline-block;
+}
+
+.more {
+    float: right;
+    background: #E84545;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+    top: 10px;
+    right: 10px;
+}
+
+.more a {
+    padding: 5px 5px 6px 5px;
+    font-size: 85%;
+    color: #fff;
+}
+
+.more a:first-child {
+    display: none;
+}
+
+.productinfo {
+    padding: 10px;
+}
+
+.productname {
+    font-weight: bold;
+
+}
+
+.productdescr {
+    margin-top: -1px;
+    font-size: 83%;
+    letter-spacing: -0.5px;
+}
+
+.products {
+    z-index: 10;
+    width: 333px;
+    display: inline-block;
+}
+
+/*кнопка "наверх"*/
+#top-link{
+	cursor:pointer; /* изменяем указатель мыши при наведении на блок */
+	display:none; /* скрываем блок с кнопкой, т.к. отображать надо только при прокрутке */
+	position: fixed; /* фиксируем расположение */
+	left:0px;
+	top:0px;
+    width: 100px;
+	padding: 0;
+    bottom: 0;
+    transition: .7s;
+    opacity: .7;
+}
+
+#top-link:hover {
+    opacity: 1;
+    background: rgba(142, 122, 221, 0.26);
+}
+
+#top-link span {
+    width: 18px;
+    height: 18px;
+    display:inline-block;
+    margin-top: 280px;
+    margin-left: 35px;
+    background: url("../images/ic_arrow_drop_up_black_18dp_1x.png");
+}
+
+#top-link a{
+    margin-top: 300px;
+    margin-left: 20px;
+    height: 20px;
+    /*list-style-image: url("../images/ic_arrow_drop_up_black_18dp_1x.png") !important;*/
+}
+
+.slider {
+}
+
+/*slider*/
+.lislider {
+    z-index: 5;
+}
+
+.active_li {
+    z-index: 10;
+}
+
+.prev, .next {
+    z-index: 50;
+}
+
+.wrapper1 {
+    width: 1080px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search {
+    width: 100%;
+}
+
+#search-results {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.search input {
+    width: 400px;
+    border: 6px solid #F38181;
+    padding: 4px 10px 4px 10px;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    border-radius: 15px;
+    outline: none;
+}
+
+.search-results {
+    position: absolute;
+    display: none;
+    width: 380px;
+    margin-left: 8px;
+    background: #fff;
+    border: 2px solid #2B2E4A;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    border-radius: 9px;
+    top: 121px;
+    z-index: 80;
+}
+
+/* triangle */
+.triangle, .triangle:before, .triangle:after,
+.triangle-4, .triangle-4:before, .triangle-4:after {
+    box-sizing: border-box;
+}
+
+.triangle {
+    display: none;
+    vertical-align: middle;
+    position: absolute;
+    bottom: -18px;
+    left: 28px;
+}
+
+.triangle-4 {
+    border-bottom: solid 8px #2B2E4A;
+    border-left: solid 8px transparent;
+    border-right: solid 8px transparent;
+}

@@ -1,0 +1,133 @@
+/*!* CSS Document *!*/
+
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans);*/
+/*@import url(http://fonts.googleapis.com/css?family=Bree+Serif);*/
+
+a {
+	color: #FFF;
+}
+
+#container {
+    background: #fff;
+    -webkit-border-radius:9px;
+    -moz-border-radius:9px;
+    border-radius:9px;
+    padding: 10px 0;
+    width: 1080px;
+	margin: 10px auto 0 auto;
+    border: 1px solid #F38181;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+nav {
+	margin: 0 0;
+}
+
+nav ul {
+	padding:0;
+	margin:0;
+	list-style: none;
+	position: relative;
+	}
+
+nav ul li {
+	display:inline-block;
+	}
+
+nav a {
+	display:block;
+	padding:0 4px;
+	color:#333;
+	font-size:14px;
+	line-height: 25px;
+	text-decoration:none;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    border-radius: 9px;
+}
+
+nav a {
+    background: none;
+    color: #333;
+}
+
+nav a:hover {
+    background: #fff;
+    color: #333;
+}
+
+nav .category:hover {
+    background: none;
+    color: #333;
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+	display: none;
+	/*position: absolute;*/
+	/*top: 30px; !* the height of the main nav *!*/
+}
+
+/* Display Dropdowns on Hover */
+nav ul li:hover > div ul {
+	display:inherit;
+}
+
+nav ul li:hover > div {
+    display: block;
+}
+
+nav ul li div {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #F38181;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    border-radius:9px;
+    padding: 5px;
+    z-index: 80;
+}
+
+/* Fisrt Tier Dropdown */
+nav ul div ul li {
+	float:none;
+	display:inline-block;
+	/*position: relative;*/
+    top: -20px;
+}
+
+nav ul div ul li a {
+	float:none;
+	display:inline-block;
+	/*position: relative;*/
+    top: -20px;
+    color: #fff;
+}
+
+/* Second, Third and more Tiers	*/
+nav ul ul ul li {
+    background: red;
+	position: relative;
+	top:-60px;
+	left:170px;
+}
+
+
+/* Change this in order to change the Dropdown symbol */
+li > a:after { content:  ' +'; }
+li > a:only-child:after { content: ''; }
+
+.category {
+    border-radius: 9px 9px 0 0;
+    margin: 0 15px;
+    border-bottom: 1px dashed #F38181;
+}
+
+.category:hover {
+    background: #F38181 !important;
+    color: #FFF !important;
+}

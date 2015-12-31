@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% load thumbnail %}
+<!-- for post in posts -->
+        <ul class="ul-catalog">
+            {% for post in posts %}
+            <li class="col-md-4 products">
+                <a href="{% url 'post_detail' pk=post.pk %}">
+
+                    {% thumbnail post.post_image "333x215" crop="center" as im %}
+                    <div class="postimage" style="background-image: url({{ im.url }});">
+                    {% empty %}
+                    <div class="postimage" style="background-image: url(http://placehold.it/333x215);">
+                    {% endthumbnail %}
+                        <div class="prices row">
+                            {% if post.past_price %}
+                            <div class="pastprice"><strike>{{ post.past_price }}</strike></div>
+                            {% else %}
+                            <div class="pastprice" style="display: none;"><strike>{{ post.past_price }}</strike></div>
+                            {% endif %}
+                            <div class="price">{{ post.price }}</div>
+                            <div class="more"><a href="{% url 'post_detail' pk=post.pk %}">Подробнее</a></div>
+                        </div>
+                        <div class="likes"><a href="/post/like/{{post.id}}">Like</a><p>{{post.likes}}</p></div>
+                    </div>
+
+                    <div class="productinfo">
+                        <span class="productname">{{ post.title }}</span><br>
+                        <p class="productdescr">{{ post.short_text }}</p>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+<!-- endfor -->
+{% endblock content %}
