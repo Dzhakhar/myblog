@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^add_to_cart/(?P<pk>[0-9]+)/(?P<q>[0-9]+)', views.add_to_cart),
     url(r'^remove_from_cart/(?P<pk>[0-9]+)', views.remove_from_cart),
     url(r'^get_cart/', views.get_cart),
+    url(r'^blog/', views.lenta),
+    url(r'^blog/(?P<pk>[0-9]+)', views.lenta_item),
 ]

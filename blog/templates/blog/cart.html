@@ -1,6 +1,31 @@
-<h1>it works</h1>
-{% for item in cart %}
-<li>{{ item.product.title }}</li>
-<li>{{ item.quantity }}</li>
-<li>{{ item.total_price }}</li>
-{% endfor %}
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="table_main">
+    <div class="table_wrap" style="">Шапка</div>
+    <div class="table_head">
+      <span class="table_head_item_1 table_head_item">Наименование:</span><span class="table_head_item_2 table_head_item">Цена:</span><span class="table_head_item_3 table_head_item">Количество:</span><span class="table_head_item_4 table_head_item">Итого:</span>
+    </div>
+    {% if user.is_authenticated %}
+    {% for item in request.products %}
+
+    <div class="table_item">
+        <span class="table_item_item_1 table_item_item"> {{ item.title }}</span>
+        <span class="table_item_item_2 table_item_item">{{ item.price }}</span>
+        <span class="table_item_item_3 table_item_item">
+          <input type="number" value='{{item.q}}' pp='{{ item.price }}' title="Введите число от 1 до 10" required min="1" max="10" style="padding-left: 4px; border-radius: 4px; width: 50px; outline: none; border: 2px solid #F38181; height: 20px; line-height: 20px;">
+        </span>
+        <span class="table_item_item_4 table_item_item"></span>
+        <span class='remove_item'>удалить</span>
+    </div>
+
+    {% endfor %}
+    {% else %}
+    {% for item in cart %}
+    <div class="table_item">
+        <span class="table_item_item_1 table_item_item">{{ item.product.title }}</span><span class="table_item_item_2 table_item_item">{{ item.product.price }}</span><span class="table_item_item_3 table_item_item"><input type="number" ng-model="amount" value='{{ item.quantity }}' ng-value='{{ item.quantity }}' title="Введите число от 1 до 10" required min="1" max="10" style="padding-left: 4px; border-radius: 4px; width: 50px; outline: none; border: 2px solid #F38181; height: 20px; line-height: 20px;"></span><span class="table_item_item_4 table_item_item">{{ item.total_price }}</span><span class='remove_item'>удалить</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class='itogo'>итого</div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+  @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic);
+  * {
+    font-family: 'PT Sans';
+  }
+  body{
+    margin: 0;
+    padding: 0;
+    height: 1000px;
+    background: url('http://subtlepatterns.com/patterns/grid.png');
+  }
+
+  .lenta-item {
+    box-sizing: border-box;
+    background: #fff;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .lenta-item p {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 2px;
+    margin-left: 3px;
+    box-sizing: border-box;
+  }
+
+  .lenta-item p a {
+    box-sizing: border-box;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .lenta-item time {
+    box-sizing: border-box;
+    font-size: 12px;
+    color: #F08A5D;
+    display: block;
+    padding-left: 4px;
+    text-align: left;
+  }
+
+  .lenta {
+    margin: 10px 100px;
+    border: 1px solid #000;
+    width: 200px;
+    max-width: 200px;
+  }
+  .lenta-head {
+    box-sizing: border-box;
+    background: #fff;
+    width: 100%;
+    max-width: 100%;
+    padding: 0px 5px 0px 5px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+  }
+  .lenta-head h3 {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0 !important;
+  }
+
+  </style>
+  <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+</head>
+<body>
+
+  <section class='lenta'>
+    <article class='lenta-head'>
+      <h3>ПОСЛЕДНИЕ СОБЫТИЯ</h3>
+    </article>
+    {% for header in headers %}
+    {% for link in links %}
+    <article class='lenta-item'>
+      <time>сегодня, 18:21</time>
+      <p><a href="{{ link }}">{{ header }}</a></p>
+    </article>
+    {% endfor %}
+    {% endfor %}
+  </section>
+</body>
+</html>

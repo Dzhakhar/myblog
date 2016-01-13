@@ -28,7 +28,8 @@ def base(request):
 
     else:
         posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-        return render(request, 'blog/base.html', {'posts': posts, 'category': category, 'subcategory': subcategory})
+        category = Category.objects.all()
+        return render(request, 'blog/base.html', {'posts': posts, 'category': category})
 
 
 def post_list(request):
@@ -152,20 +153,98 @@ def sub_filter(request, pk):
 
 def add_to_cart(request, pk, q):
     product = Post.objects.get(id=pk)
+    product.q = q
     cart = Cart(request)
     added_product = product
-    cart.add(product, product.price, q)
-    return render_to_response('blog/cart.html', {'added_product': added_product})
+    product_user = 0;
+    if request.user.is_authenticated():
+        product.q = q
+        request.user.post_set.add(product)
+        product_user = request.user.post_set
+        request.products = request.user.post_set.filter(user=request.user)
+    else:
+        cart.add(product, product.price, q)
+
+    return render(request, 'blog/cart.html', {'added_product': added_product, 'cart':Cart(request), 'products': product_user})
 
 
 def remove_from_cart(request, pk):
     product = Post.objects.get(id=pk)
     cart = Cart(request)
     removed_product = product
+
     cart.remove(product)
+    if request.user.is_authenticated():
+        request.user.remove_from_product_list(product)
+
     return render_to_response('blog/cart.html', {'removed_product': removed_product})
 
 
 def get_cart(request):
-    return render_to_response('blog/cart.html', dict(cart=Cart(request)))
+    products = 0;
+    if request.user.is_authenticated:
+        if not request.user.is_anonymous():
+            request.products = request.user.post_set.filter(user=request.user)
 
+    return render(request, 'blog/cart.html', dict(cart=Cart(request)))
+
+
+def lenta(request):
+    url = 'http://tengrinews.kz'
+
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content)
+    items = soup.findAll('div', {'class': 'ten'})
+    # print items[0]
+    header = []
+    links = []
+    for i in items[0]:
+        span = i.find('span')
+        a = i.find('a')
+        if type(a) == int:
+            print ''
+        else:
+            href = a.get('href')
+            full_href = url + href
+            links.append(full_href)
+
+        if type(span) == int:
+            print ''
+        else:
+            header.append(span.text);
+            print span.text
+
+    header = header[1:7]
+    return render_to_response('blog/indexfile.html', {'headers':header, 'links':links})
+
+
+def lenta_item(request):
+    url = 'http://tengrinews.kz'
+
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content)
+    items = soup.findAll('div', {'class': 'ten'})
+    # print items[0]
+    for i in items[0]:
+        span = i.find('span')
+        a = i.find('a')
+        if type(a) == int:
+            print ''
+        else:
+            href = a.get('href')
+            full_href = url + href
+            print full_href
+            r_content = requests.get(full_href)
+            print(r_content.status_code)
+            soup_content = BeautifulSoup(r_content.content)
+            items_content = soup_content.findAll('div', {'class': 'text sharedText'})
+            for con in items_content:
+                p_content = con.findAll('p')
+                frame = con.find('iframe')
+                for p in p_content:
+                    try:
+                        print p.text
+                        print url + p.img.get('src')
+                        print frame.get('src')
+                    except:
+                        pass

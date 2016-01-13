@@ -54,7 +54,8 @@ class Like(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey('auth.User')
+    user = models.ForeignKey(User, default='', blank=True, null=True)
+    q = models.IntegerField(default='', blank=True, null=True)
     title = models.CharField(max_length=200)
     text = RichTextField()
     post_image = models.ImageField(upload_to="postimage/", blank=True, null=True)
