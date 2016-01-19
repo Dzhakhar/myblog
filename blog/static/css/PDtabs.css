@@ -1,0 +1,31 @@
+/*#tabs {
+  background: red;
+  width: 1080px;
+  margin: 0 auto;
+}*/
+
+.postcontent__header ul {
+  margin: 0;
+  padding: 0;
+  height: 40px;
+  padding-top: 7px;
+  padding-left: 20px;
+}
+
+.postcontent__header ul li {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 2px 18px;
+  background: #E84545;
+  -webkit-border-radius:9px;
+  -moz-border-radius:9px;
+  border-radius:9px;
+}
+
+.postcontent__header ul li a{
+  font-size: 14px;
+}
+
+.postcontent__header ul li a:hover {
+  color: #fff;
+}

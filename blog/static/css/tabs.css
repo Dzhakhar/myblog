@@ -1,0 +1,127 @@
+* {
+  font-family: 'Open Sans' !important;
+}
+
+#tabs {
+  width: 980px;
+  margin: 20px auto;
+}
+
+#tabs ul {
+  margin: 0;
+  padding: 0;
+}
+
+#tabs-1 label {
+  font-size: 14px;
+}
+
+.fio, .email, .phone {
+  width: 1px;
+  display: block;
+}
+
+.phone, .email {
+  margin-top: 20px;
+  width: 200px !important;
+}
+
+#fio, #email, #phone {
+  /*-webkit-box-shadow: 0px 0px 2px 3px rgba(233,233,233,0.8);
+  box-shadow: 0px 0px 1px 1px rgba(200,200,200,0.8);*/
+  width: 500px;
+  padding: 3px 7px;
+  margin-top: 4px;
+  border: 1px solid #331940;
+  color: #331940;
+  background: #fff;
+  -webkit-border-radius: 0 9px 9px 9px;
+  -moz-border-radius: 0 9px 9px 9px;
+  border-radius: 9px 9px 9px 9px;
+  line-height: 30px;
+
+}
+
+#tabs li {
+  display: inline-block;
+  background: #331940;
+  padding: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  -webkit-border-radius:9px 9px 0 0;
+  -moz-border-radius:9px 9px 0 0;
+  border-radius:9px 9px 0 0;
+}
+
+#tabs li a:hover {
+  color: #fff !important;
+}
+
+#tabs-1, #tabs-2, #tabs-3 {
+  background: #faf6ed !important;
+  border: 2px solid #E84545;
+  -webkit-border-radius:0 9px 9px 9px;
+  -moz-border-radius:0 9px 9px 9px;
+  border-radius:0 9px 9px 9px;
+  padding: 10px;
+}
+
+.ui-tabs-active {
+  background: #E84545 !important;
+}
+
+.gender {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.lastgender {
+  margin-left: 10px !important;
+}
+
+.submitinput {
+  background: #331940;
+  outline: none;
+  border: none;
+  margin-top: 20px;
+  padding: 4px;
+  cursor: pointer;
+  color: #fff;
+  -webkit-border-radius:9px;
+  -moz-border-radius:9px;
+  border-radius:9px;
+}
+
+
+.f_pro_wrap {
+  width: 940px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.f_pro {
+  /*margin: 0 auto;*/
+  padding: 1px;
+  min-height: 130px;
+  margin: 20px auto;
+}
+
+.f_pro_img, .f_pro_descr {
+  display: inline-block;
+  float: left;
+}
+
+.f_pro_descr {
+  padding-left: 10px;
+  text-align: left;
+  max-width: 660px;
+  overflow: hidden;
+}
+
+.f_pro a {
+  color: #333 !important;
+}
+
+.f_pro a:hover {
+  color: #333 !important;
+}

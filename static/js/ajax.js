@@ -24,3 +24,25 @@ function searchSuccess(data, textStatus, jqXHR)
         $('.search-results').show();
         $('#search-results').html(data);
     }
+
+var page = 2;
+
+$(function(){
+  $('.more_posts').click(function(){
+    $.ajax({
+      type: 'POST',
+      url: '/loadmore/',
+      data: {
+        'p':page,
+        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+      },
+      success: moreLoadSuccess,
+      dataType: 'html'
+    })
+  })
+})
+
+function moreLoadSuccess(data, textStatus, jqXHR){
+  $('.ul-catalog').append(data)
+  page = page + 1
+}

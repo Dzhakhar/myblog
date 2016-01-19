@@ -354,3 +354,26 @@ a:hover {
     border-left: solid 8px transparent;
     border-right: solid 8px transparent;
 }
+
+.more_posts {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  background: #331940;
+}
+
+.likes {
+  width: 60px;
+  background: #fff;
+}
+
+.likes a {
+  display: inline-block;
+}
+
+.likes p {
+  display: inline-block;
+}

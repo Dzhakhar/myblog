@@ -5,12 +5,12 @@
 <p class="error">Sorry, that's not a valid username or password</p>
 {% endif %}
 
-<form action="/accounts/auth/" method="post">{% csrf_token %}
-    <label for="username">User name:</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password">
-    <input type="submit" value="login" />
+<form action="/accounts/auth/" class='loginuserform' method="post">{% csrf_token %}
+    <label class='username' for="username">Имя пользователя:</label><br>
+    <input id='username' type="text" name="username" value="" id="username"><br>
+    <label class='password' for="password">Пароль:</label><br>
+    <input id='password' type="password" name="password" value="" id="password"><br>
+    <input type="submit" value="login" id='submit' /> <a href="" style='font-size: 12px;'>Забыли пароль?</a>
 </form>
 
 {% endblock %}

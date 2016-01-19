@@ -3,18 +3,12 @@ var inp = $('.amount');
 var price = inp.attr('pr');
 var product_id = inp.attr('pi');
 var form_action = $('.add');
-
 inp.on('input keyup', function(){
   var count = $(this).val();
   post_price.html(count*price);
   form_action.attr('action', '/add_to_cart/' + product_id + '/' + count);
 });
-
-
 var cart_input = $('.table_item_item_3 input');
-
-console.log($('.table_item_item_4').siblings('.table_item_item_3').children('input').val());
-
 $('.table_item_item_4').click(function(){
   $(this).html($(this).siblings().children().val() + $(this).siblings().children().attr('pp'));
 });

@@ -47,12 +47,6 @@ class Subcategory(models.Model):
         return self.name
 
 
-class Like(models.Model):
-    author = models.ForeignKey(User)
-    post = models.ForeignKey('Post', related_name="likes")
-    ts = models.DateTimeField(default=timezone.now)
-
-
 class Post(models.Model):
     user = models.ForeignKey(User, default='', blank=True, null=True)
     q = models.IntegerField(default='', blank=True, null=True)
@@ -69,6 +63,9 @@ class Post(models.Model):
     # category = models.ManyToManyField(Category, through='Category', related_name='Postcategory')
     categories = models.ForeignKey(Subcategory, related_name='Postcategory', default=None)
 
+    def true_likes(self):
+        return self.favourites_set.filter(active = True).count()
+
     def __unicode__(self):
         return self.title
 
@@ -82,6 +79,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Favourites(models.Model):
+    user = models.ForeignKey(User)
+    postt = models.ForeignKey(Post)
+    active = models.BooleanField(default=False)
+
 
 
 class Comment(models.Model):

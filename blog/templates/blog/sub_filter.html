@@ -1,11 +1,51 @@
 {% extends 'blog/base.html' %}
-
+{% load staticfiles %}
+{% load thumbnail %}
 {% block content %}
 {{ sub_name }}
-<ul>
+<a href="/post/like/">sdfsdfsdf</a>
+<ul class='ul-catalog'>
 {% for p in sub %}
     {% for post in p.Postcategory.all %}
-    <li>{{ post.title }}</li>
+    <li class="col-md-4 products">
+
+
+            {% thumbnail post.post_image "333x215" crop="center" as im %}
+            <div class="postimage" style="background-image: url({{ im.url }});">
+            {% empty %}
+            <div class="postimage" style="background-image: url(http://placehold.it/333x215);">
+            {% endthumbnail %}
+                <div class="prices row">
+                    {% if post.past_price %}
+                    <div class="pastprice"><strike>{{ post.past_price }}</strike></div>
+                    {% else %}
+                    <div class="pastprice" style="display: none;"><strike>{{ post.past_price }}</strike></div>
+                    {% endif %}
+                    <div class="price">{{ post.price }}</div>
+                    <div class="more"><a href="{% url 'post_detail' pk=post.pk %}">Подробнее</a></div>
+                </div>
+                <div class="likes">
+                  <span>
+                    {% if request.user.like_counter > 0 %}
+                    <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart-red.png' width='20px' alt="">
+                    {% else %}
+                    <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
+                    {% endif %}
+                  </span>
+                  <span class="likecount id{{ post.id }}">
+                    {{ post.true_likes }}
+                  </span>
+                </div>
+
+            </div>
+
+            <div class="productinfo">
+                <span class="productname">{{ post.title }}</span><br>
+                <p class="productdescr">{{ post.short_text }}</p>
+            </div>
+        </a>
+    </li>
+
     {% endfor %}
 {% endfor %}
 </ul>

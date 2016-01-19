@@ -14,7 +14,8 @@ urlpatterns = [
     url(r'^accounts/invalid/$', views.invalid_login),
     url(r'^accounts/register/$', views.register_user),
     url(r'^accounts/register_success/$', views.register_success),
-    url(r'^post/like/(?P<pk>[0-9]+)/$', views.post_like, name='post_like'),
+    url(r'^accounts/cabinet/', views.profile),
+    url(r'^post/like/$', views.like),
     url(r'^search/$', views.search_titles),
     url(r'^post/sub/(?P<pk>[0-9 A-Z a-z]+)', views.sub_filter),
     url(r'^add_to_cart/(?P<pk>[0-9]+)/(?P<q>[0-9]+)', views.add_to_cart),
@@ -22,4 +23,5 @@ urlpatterns = [
     url(r'^get_cart/', views.get_cart),
     url(r'^blog/', views.lenta),
     url(r'^blog/(?P<pk>[0-9]+)', views.lenta_item),
+    url(r'^loadmore/$', views.loadmore),
 ]

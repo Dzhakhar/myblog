@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles angular_utils %}
 
 <!DOCTYPE html>
 <html ng-app="myApp" lang="en">
@@ -11,18 +11,23 @@
   <link rel="stylesheet" href="{% static 'css/blog.css' %}">
   <link rel="stylesheet" href="{% static 'css/dropdown-menu.css' %}">
   <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+  {% block tabsCss %}
+  <link rel="stylesheet" href="{% static 'css/tabs.css' %}">
+  {% endblock %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="/media/jquery.min.css">
+  <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/controller.js' %}"></script>
+  <script src="{% static 'js/like.js' %}"></script>
+  <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"-->
+  <script src='https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js'></script>
   <script>
         theTime = new Date();
         theHour = theTime.getHours();
         theMinute = theTime.getMinutes();
-        console.log('sdfsf');
-        console.log(theHour);
         $(document).ready(function(){
             if (theHour >= 7 && theHour <= 18) {
-                console.log('if');
                 $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-1.png)');
             } else {
                 $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-2.png)');
@@ -43,8 +48,8 @@
 
             </ul>
                 <ul class="ul-right">
-                    <a href="" class="cart"><img src="{% static 'images/cart.png' %}" alt=""><span class="cart_count">1200</span></a>
-                    <li><a href="/accounts/login/"><strong>{{ user }}</strong></a></li>
+                    <a href="/get_cart/" class="cart"><img src="{% static 'images/cart.png' %}" alt=""><span class="cart_count">{{ cart_count }}</span></a>
+                    <li><a href="/accounts/cabinet/"><strong>{{ user }}</strong></a></li>
                     <li><a href="/accounts/cabinet/">Кабинет</a></li>
                     <li><a style="border-right: none" href="/accounts/logout/">Выйти</a></li>
                 </ul>
@@ -60,6 +65,7 @@
                 <li><a style="border-right: none" href="">О компании</a></li>
             </ul>
                 <ul class="ul-right">
+                    <a href="/get_cart/" class="cart"><img src="{% static 'images/cart.png' %}" alt=""><span class="cart_count">{{ cart_count }}</span></a>
                     <li><a href="/accounts/login/">Войти</a></li>
                     <li><a style="border-right: none" href="/accounts/register/">Зарегистрироваться</a></li>
                 </ul>
@@ -68,11 +74,11 @@
         {% endif %}
         <div class="wrapper1">
             <div class="logo">
-                <h1><strong>LOGO</strong></h1>
+                <a href="/"><h1><strong>LOGO</strong></h1></a>
             </div>
             <div class="search">
                 <div class="triangle triangle-4" style="z-index: 40;"></div>
-                {% csrf_token %}
+                <!-- csrf_token  -->
                 <input type="search" placeholder="Поиск по акциям" id="search" name='search'>
                 <div class="search-results">
                     <ul id="search-results"></ul>
@@ -110,7 +116,7 @@
         <ul class="ul-catalog">
             {% for post in posts %}
             <li class="col-md-4 products">
-                <a href="{% url 'post_detail' pk=post.pk %}">
+
 
                     {% thumbnail post.post_image "333x215" crop="center" as im %}
                     <div class="postimage" style="background-image: url({{ im.url }});">
@@ -124,9 +130,24 @@
                             <div class="pastprice" style="display: none;"><strike>{{ post.past_price }}</strike></div>
                             {% endif %}
                             <div class="price">{{ post.price }}</div>
-                            <div class="more"><a href="{% url 'post_detail' pk=post.pk %}">Подробнее</a></div>
+                            <div class="more"><a class='more-a' href="{% url 'post_detail' pk=post.pk %}">Подробнее</a></div>
                         </div>
-                        <div class="likes"><a class="likeit" style="cursor: pointer; display: block;">Like</a><p class="likecount">{{ post.likes.all|length }}</p></div>
+                        <div class="likes">
+                          <span>
+                            {% if user.is_authenticated %}
+                            {% if request.user|is_liked:post.id %}
+                            <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart-red.png' width='20px' alt="">
+                            {% else %}
+                            <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
+                            {% endif %}
+                            {% else %}
+                            <img class='' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
+                            {% endif %}
+                          </span>
+                          <span class="likecount id{{ post.id }}">
+                            {{ post.true_likes }}
+                          </span>
+                        </div>
 
                     </div>
 
@@ -138,6 +159,7 @@
             </li>
             {% endfor %}
         </ul>
+        <div class="more_posts" p='2'>еще</div>
                 {% endblock %}
         </div>
                 {% block postslider %}
@@ -149,55 +171,6 @@
 	        <a href="#top">наверх</a>
         </div>
     <script src="{% static 'js/button.js' %}"></script>
-    <script>
-
-//        $('.more').mouseover(function(){
-//            $('.mydiv').load('/post/1/ .short', function(){
-//                console.log('load');
-//            });
-//        });
-//        $('.more').mouseout(function(){
-//            $('.mydiv').html('');
-//        });
-//
-
-
-//        var elem = $('.mydiv').offset();
-//        console.log(elem.left);
-//        $('.mydiv').offset({top:80, left: elem.left + 100});
-//        console.log($('.mydiv').offset());
-//        console.log(elem.left);
-
-//        $(document).mousemove(function(e){
-//            $('*').css('transition', '1s');
-//            var X = e.pageX;
-//            var Y = e.pageY;
-//            var elem = $('.mydiv');
-//            elemWidth = parseInt(elem.css('width'));
-//            elemHeight = parseInt(elem.css('height'));
-//            elem.offset({top: Y, left: X});
-////            console.log("X: " + X + ", Y: " + Y);
-//        })
-
-//        $('.likeit').click(function(){
-//            $(".likeit").toggle(
-//            showOrHide = true,
-//            function(){
-//            console.log('d');
-//            var likes = parseInt($('.likecount').html());
-//            console.log('ewr');
-//            $(this).load('/post/like/1');
-//            parseInt($('.likecount').html(likes + 1));
-//        },
-//        function(){
-//            var likes = parseInt($('.likecount').html());
-//            $(this).load('/post/like/1');
-//            parseInt($('.likecount').html(likes - 1));
-//        });
-//        })
-
-
-    </script>
     <script src="{% static 'js/ajax.js' %}"></script>
     <script src="{% static 'js/category.js' %}"></script>
     <script src="{% static 'js/controller.js' %}"></script>

@@ -9,9 +9,14 @@
 
 {% for p in search_posts %}
     <a class="search-link" href="/post/{{ p.id }}" style="color: #333; padding: 5px 4px; display: block; border-bottom: 1px dashed #eaeaea; height: 120px;">
-        <li style="padding-bottom: 0; position: relative;">
+        <li style="oveflow: hidden; padding-bottom: 0; position: relative;">
+            {% if p.post_image %}
             <img width="130px" height="120px" src="{{ p.post_image.url }}" width="100px" alt="">
             <span style="display: block; position: absolute; left: 140px; top: 5px; font-size: 14px;">{{ p.short_text }}</span>
+            {% else %}
+            <img width="130px" height="120px" src="http://placehold.it/130x120" width="100px" alt="">
+            <span style="display: block; position: absolute; left: 140px; top: 5px; font-size: 14px;">{{ p.short_text }}</span>
+            {% endif %}
         </li>
     </a>
 {% endfor %}

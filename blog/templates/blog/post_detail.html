@@ -1,4 +1,8 @@
 {% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block tabsCss %}
+<link rel="stylesheet" href="{% static 'css/PDtabs.css' %}">
+{% endblock %}
 {% csrf_token %}
 {% load angular_utils %}
 {% load staticfiles %}
@@ -30,12 +34,30 @@
     {% block content %}
     {% endblock %}
     {% block postcontent %}
-    <div class="postcontent">
-        <div class="postcontent__header"></div>
-        <div class="postdescription">
-            {{ post.text | safe  }}
-        </div>
+    <div id="tabs" class='postcontent'>
+      <div class="postcontent__header">
+        <ul>
+          <li><a href="#tabs-1">Профиль</a></li>
+          <li><a href="#tabs-2">Отзывы</a></li>
+        </ul>
+      </div>
+      <div id="tabs-1">
+            <div class="postdescription">
+                {{ post.text | safe  }}
+            </div>
+        <br>
+
+      </div>
+      <div id="tabs-2">
+
+      </div>
     </div>
+    <script>
+    $(function() {
+      $("#tabs").tabs();
+    });
+    </script>
+
     {% endblock %}
     <script>
 //        var ulChildren = ($('.ulslider').children().toArray());

@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/tabs.css' %}">
+{% load thumbnail %}
+{% block content %}
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Профиль</a></li>
+    <li><a href="#tabs-2">Избранное</a></li>
+  </ul>
+  <div id="tabs-1">
+    <form action="">
+      <label class='fio' for="fio">
+      Ф.И.О
+      <input id='fio' type="text">
+    </label>
+    <div class='gender'>
+        Пол<br>
+        <label for="male">Мужской</label>
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="female" class='lastgender'>Женский</label>
+        <input type="radio" name="gender" id="female" value="female">
+    </div>
+        <label for="email" class='email'>
+          Email:
+          <input type="email" id='email'>
+        </label>
+        <label for="phone" class='phone'>
+          Номер телефона:
+          <input type="text" id='phone' onkeyup="this.value=this.value.replace(/[^\d\+]+/g,'')" maxlength="12">
+        </label>
+        <input type="submit" value='Сохранить' class='submitinput'>
+      </form>
+    <br>
+
+  </div>
+  <div id="tabs-2">
+    <div class="f_pro_wrap">
+    {% for i in favs %}
+    <div class='f_pro'>
+      <a href="/post/{{ i.postt.id }}">
+      <span class='f_pro_img'>
+        {% thumbnail i.postt.post_image "200x129" crop="center" as im %}
+        <img src="{{ im.url }}" align='center' alt="" width='200px' height='129px'>
+        {% empty %}
+        <img src="http://placehold.it/200x129" align='center' alt="" width='200px' height='129px'>
+        {% endthumbnail %}
+      </span>
+      <span class='f_pro_descr'>
+        <span class="f_pro_head">{{ i.postt.title }}</span>
+        <p>{{ i.postt.short_text }}</p>
+      </span>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+$(function() {
+  $("#tabs").tabs();
+});
+</script>
+{% endblock %}

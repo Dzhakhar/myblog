@@ -1,0 +1,47 @@
+.loginuserform {
+  margin: 20px auto;
+  width: 300px;
+  background: rgba(232,69,69, .7);
+  padding: 10px;
+  text-align: center;
+  -webkit-border-radius:9px;
+  -moz-border-radius:9px;
+  border-radius:9px;
+}
+
+.username {
+  color: #fff;
+}
+
+.password {
+  color: #fff;
+}
+
+#username {
+  margin-bottom: 20px;
+}
+
+#username, #password {
+  padding: 3px 7px;
+  margin-top: 4px;
+  border: 1px solid #331940;
+  color: #331940;
+  background: #fff;
+  -webkit-border-radius: 0 9px 9px 9px;
+  -moz-border-radius: 0 9px 9px 9px;
+  border-radius: 9px 9px 9px 9px;
+  line-height: 30px;
+}
+
+#submit {
+  background: #331940;
+  outline: none;
+  border: none;
+  margin-top: 20px;
+  padding: 4px;
+  cursor: pointer;
+  color: #fff;
+  -webkit-border-radius:9px;
+  -moz-border-radius:9px;
+  border-radius:9px;
+}

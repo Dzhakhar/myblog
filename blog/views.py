@@ -9,27 +9,80 @@ from forms import MyRegistrationForm
 from django.utils import timezone
 import sorl.thumbnail
 from .forms import PostForm
-from .models import Post, Like, Category, Subcategory
+from .models import Post, Category, Subcategory, Favourites
 import requests
 from bs4 import BeautifulSoup
+from django.core.paginator import Paginator
 
 
-# Create your views here.
+
+def loadmore(request):
+    for i in request.POST['p']:
+        try:
+            pagenum = int(request.POST['p'])
+            posts = Post.objects.all()
+            paginator = Paginator(posts, 9)
+            page = paginator.page(pagenum)
+        except:
+            page = []
+
+    return render(request, 'blog/pages.html', {'posts':page})
+
+
+
+def profile(request):
+    if not request.user.is_anonymous():
+        favs = request.user.favourites_set.filter(active = True)
+        return render(request, 'blog/profile.html', {'favs': favs})
+
+    else:
+        return redirect('/accounts/login/')
+
+
+
+def like(request):
+    post = Post.objects.filter(id = int(request.POST['i']))
+    f = Favourites.objects.filter(user=request.user, postt=post[0])
+    if f.count() == 0:
+        Favourites(user=request.user, postt=post[0], active = True).save()
+    else:
+        f = Favourites.objects.filter(user=request.user, postt=post[0]).first()
+        f.active = not f.active
+        f.save()
+
+    gf = post[0].favourites_set.filter(active=True).count()
+
+    print f.active
+    return render(request, 'blog/likes.html', {'like':gf})
+
+
 
 def base(request):
     if request.user.is_authenticated():
-        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+        # cart_count = request.user.post_set.all().count()
+        posts = Post.objects.all()
+        # for p in posts:
+        #     p.favourites_set.filter(active=True)
         category = Category.objects.all()
+        paginator = Paginator(posts, 9)
+        page = paginator.page(1)
+        for i in paginator.page(2):
+            print i
 
         return render(request, 'blog/base.html', {
-            'posts': posts,
+            'posts': page,
             'user': request.user,
             'category': category})
 
     else:
-        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+        posts = Post.objects.all()
+        paginator = Paginator(posts, 9)
+        page = paginator.page(1)
         category = Category.objects.all()
-        return render(request, 'blog/base.html', {'posts': posts, 'category': category})
+        return render(request, 'blog/base.html', {'posts': page, 'category': category})
+
+
+
 
 
 def post_list(request):
@@ -54,8 +107,8 @@ def post_new(request):
             post.save()
             return redirect('blog.views.post_detail', pk=post.pk)
     else:
+        return render(request, 'blog/post_edit.html', {'form': form})
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
 
 
 def post_edit(request, pk):
@@ -72,23 +125,10 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-
-def post_like(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.user.is_authenticated():
-        if Like.objects.filter(author=request.user, post=post).count() == 0:
-            Like.objects.create(post=post, author=request.user)
-        else:
-            Like.objects.filter(author=request.user, post=post).delete()
-    else:
-        return HttpResponseRedirect('/accounts/login/')
-    return HttpResponseRedirect('')
-
-
 def login(request):
     c = {}
     c.update(csrf(request))
-    return render_to_response('blog/login.html', c)
+    return render(request, 'blog/login.html', c)
 
 
 def auth_view(request):
@@ -103,18 +143,17 @@ def auth_view(request):
 
 
 def loggedin(request):
-    return render_to_response('blog/loggedin.html',
-                              {'full_name': request.user.username})
+    return redirect('/')
 
 
 def invalid_login(request):
-    return render_to_response('blog/invalid_login.html')
+    return render(request, 'blog/invalid_login.html')
 
 
 def logout(request):
     auth.logout(request)
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render_to_response('blog/post_list.html', {'posts': posts})
+    posts = Post.objects.all()
+    return render(request, 'blog/post_list.html', {'posts': posts})
 
 
 def register_user(request):
@@ -127,11 +166,11 @@ def register_user(request):
     args.update(csrf(request))
     args['form'] = MyRegistrationForm()
     print(args)
-    return render_to_response('blog/register.html', args)
+    return render(request, 'blog/register.html', args)
 
 
 def register_success(request):
-    return render_to_response('blog/register_success.html')
+    return render(request, 'blog/register_success.html')
 
 
 def search_titles(request):
@@ -142,13 +181,13 @@ def search_titles(request):
 
     search_posts = Post.objects.filter(title__contains=search_text)
 
-    return render_to_response('blog/ajax_search.html', {'search_posts': search_posts})
+    return render(request, 'blog/ajax_search.html', {'search_posts': search_posts})
 
 
 def sub_filter(request, pk):
     sub = Subcategory.objects.filter(name=pk)
     sub_name = pk
-    return render_to_response('blog/sub_filter.html', {'sub': sub, 'sub_name': sub_name})
+    return render(request, 'blog/sub_filter.html', {'sub': sub, 'sub_name': sub_name})
 
 
 def add_to_cart(request, pk, q):
@@ -165,7 +204,7 @@ def add_to_cart(request, pk, q):
     else:
         cart.add(product, product.price, q)
 
-    return render(request, 'blog/cart.html', {'added_product': added_product, 'cart':Cart(request), 'products': product_user})
+    return redirect('blog.views.get_cart')
 
 
 def remove_from_cart(request, pk):
@@ -177,7 +216,7 @@ def remove_from_cart(request, pk):
     if request.user.is_authenticated():
         request.user.remove_from_product_list(product)
 
-    return render_to_response('blog/cart.html', {'removed_product': removed_product})
+    return render(request, 'blog/cart.html', {'removed_product': removed_product})
 
 
 def get_cart(request):
@@ -215,7 +254,7 @@ def lenta(request):
             print span.text
 
     header = header[1:7]
-    return render_to_response('blog/indexfile.html', {'headers':header, 'links':links})
+    return render(request, 'blog/indexfile.html', {'headers':header, 'links':links})
 
 
 def lenta_item(request):
