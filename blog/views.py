@@ -9,11 +9,36 @@ from forms import MyRegistrationForm
 from django.utils import timezone
 import sorl.thumbnail
 from .forms import PostForm
-from .models import Post, Category, Subcategory, Favourites
+from .models import Post, Category, Subcategory, Favourites, Comment, Company
+from .models import User
 import requests
 from bs4 import BeautifulSoup
 from django.core.paginator import Paginator
 
+def confirm_cart(request):
+    pass
+
+
+def geo_add(request):
+    return render(request, 'blog/geo-add.html')
+
+def geo(request):
+    c = Company.objects.all()
+    # return render(request, 'blog/comments.html', {'text':com})
+    return render_to_response('blog/geo.html', {'c':c})
+
+
+def user_profile_show(request, pk):
+    return render(request, 'blog/pro.html', {'user_pro':User.objects.filter(id = pk)[0]})
+
+
+def comment_add(request):
+    com = request.POST.get('comment_text')
+    post = request.POST.get('post')
+    p = Post.objects.filter(id = int(post))
+    commentik = []
+    Comment(author = request.user, post = p[0], text = com).save()
+    return render(request, 'blog/comments.html', {'text':com, 'author': request.user, 'ts': timezone.now()}) #p[0].comments
 
 
 def loadmore(request):
@@ -41,17 +66,26 @@ def profile(request):
 
 
 def like(request):
+    print '0'
     post = Post.objects.filter(id = int(request.POST['i']))
+    print '1'
     f = Favourites.objects.filter(user=request.user, postt=post[0])
+    print '2'
     if f.count() == 0:
+        print '3(count == 0)'
         Favourites(user=request.user, postt=post[0], active = True).save()
     else:
+        print '3(count > 0)'
         f = Favourites.objects.filter(user=request.user, postt=post[0]).first()
+        print '4(count > 0)'
         f.active = not f.active
+        print '5(count > 0)'
         f.save()
+        print '6(count > 0) saved'
 
+    print '7'
     gf = post[0].favourites_set.filter(active=True).count()
-
+    print gf
     print f.active
     return render(request, 'blog/likes.html', {'like':gf})
 
@@ -92,7 +126,7 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    return render(request, 'blog/post_detail.html', {'post': post, 'p': post.comments.all()})
 
 
 def post_new(request):
@@ -125,6 +159,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
+
 def login(request):
     c = {}
     c.update(csrf(request))
@@ -153,7 +188,10 @@ def invalid_login(request):
 def logout(request):
     auth.logout(request)
     posts = Post.objects.all()
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    paginator = Paginator(posts, 9)
+    page = paginator.page(1)
+    category = Category.objects.all()
+    return render(request, 'blog/base.html', {'posts': page, 'category': category})
 
 
 def register_user(request):

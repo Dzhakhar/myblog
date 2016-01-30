@@ -1,9 +1,14 @@
 {% extends "blog/base.html" %}
+{% load staticfiles %}
+{% block tabsCss %}
+<link rel="stylesheet" href="{% static 'css/reg.css' %}">
+{% endblock %}
+{% load thumbnail %}
 {% block content %}
 
     <h2>Register</h2>
     <form action="/accounts/register/" method="post">{% csrf_token %}
-        <div>{{ form }}</div>
+        <div class='b'>{{ form }}</div>
         <input type="submit" value="Register" />
     </form>
 

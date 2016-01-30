@@ -16,10 +16,11 @@
   <link rel="stylesheet" href="{% static 'css/tabs.css' %}">
   {% endblock %}
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
-  <link rel="stylesheet" href="/media/jquery.min.css">
+  <!-- <link rel="stylesheet" href="/media/jquery.min.css"> -->
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/controller.js' %}"></script>
   <script src="{% static 'js/like.js' %}"></script>
+  <script src="{% static 'js/comment_send.js' %}"></script>
   <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"-->
   <script src='https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js'></script>
   <script>
@@ -91,7 +92,7 @@
 <div id="container">
     <nav>
         <ul>
-            {% for cat in category %}
+          {% for cat in category %}
             <li><a  href="#" title="{{ cat }}" class="category">{{ cat.name }}</a><!-- First Tier Drop Down -->
             {% if cat.sub.all %}
             <div class="submenu">

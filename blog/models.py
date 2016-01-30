@@ -5,6 +5,13 @@ from ckeditor.fields import RichTextField
 import ast
 
 
+# class User(AbstractUser):
+#     phone_number = models.CharField(unique=True, error_messages={'unique':"Uniqqq"}, max_length=13)
+#     firstname = models.CharField(max_length=30, blank=True)
+#     lastname = models.CharField(max_length=30, blank=True)
+
+
+
 class ListField(models.TextField):
     __metaclass__ = models.SubfieldBase
     description = "Stores a python list"
@@ -47,7 +54,18 @@ class Subcategory(models.Model):
         return self.name
 
 
+class Company(models.Model):
+    name = models.CharField(max_length=50, default='')
+    lat = models.FloatField(null=True, blank=True)
+    lon = models.FloatField(null=True, blank=True)
+    cat = models.ForeignKey(Subcategory, related_name='Companycategory', default=None)
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
+    lat = models.FloatField(null=True, blank=True)
+    lon = models.FloatField(null=True, blank=True)
     user = models.ForeignKey(User, default='', blank=True, null=True)
     q = models.IntegerField(default='', blank=True, null=True)
     title = models.CharField(max_length=200)

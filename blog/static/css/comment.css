@@ -1,0 +1,23 @@
+.the_comment {
+  border-bottom: 1px dashed #2B2E4A; padding: 10px;
+}
+
+.comment_author {
+  margin-left: 20px; color: #2B2E4A !important; font-weight: bold;
+}
+
+.comment_author a {
+  color: #2B2E4A !important;
+}
+
+.date {
+  float: right;
+}
+
+.comment_text {
+  margin-left: 20px; font-size: 14px;
+}
+
+.all_comments {
+  margin-bottom: 20px;
+}

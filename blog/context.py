@@ -1,5 +1,5 @@
 from .models import Post, Category, Subcategory, Favourites
-from django.contrib.auth.models import User
+from .models import User
 from cart import Cart
 
 def categories(request):

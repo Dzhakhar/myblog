@@ -17,15 +17,20 @@ $(document).ready(function(){
   };
   var likeload = function(){
     if($(this).attr('src') == '/media/heart.png'){
+      alert("if");
       $(this).attr('src', '/media/heart-red.png');
       // $(this).parent().siblings().text(bbb+1);
     }else if($(this).attr('src') == '/media/heart-red.png') {
+      alert("else if");
       $(this).attr('src', '/media/heart.png');
       // if(bbb != 0){
       //   $(this).parent().siblings().text(bbb-1);
       // }
+    }else {
+      alert('else')
     };
     var aThis = this;
+    alert('likeload()');
     $.ajax({
       type: 'POST',
       url: '/post/like/',
@@ -49,6 +54,7 @@ $(document).ready(function(){
       //   $(this).parent().siblings().text(bbb-1);
       // }
     };
+
     var aThis = this;
     $.ajax({
       type: 'POST',
@@ -61,6 +67,6 @@ $(document).ready(function(){
         $(aThis).parent().siblings().text(data)
       },
       dataType: 'text'
-    })
+    });
   })
 })

@@ -45,7 +45,8 @@
 
 
 .postdescription {
-    width: 600px;
+    width: 500px;
+    float: left;
     overflow: hidden;
 }
 

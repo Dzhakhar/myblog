@@ -1,6 +1,6 @@
 from django import forms
 from .models import Post, Comment
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -17,9 +17,11 @@ class CommentForm(forms.ModelForm):
 
 class MyRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    phone_number = forms.CharField(required=True)
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'phone_number', 'password1', 'password2')
 
     def save(self, commit=True):
         user = super(MyRegistrationForm, self).save(commit=False)

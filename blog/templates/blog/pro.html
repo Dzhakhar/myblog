@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block tabsCss %}
+{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<div class='header_bg'></div>
+Hello, {{ user_pro }} <br>
+cart: {{ user_pro.post_set.all.count }} <br>
+bookmarks: {% for i in user_pro.favourites_set.all %}
+{{ i.postt.short_text }} <br> <br>
+{% endfor %}
+{% endblock %}

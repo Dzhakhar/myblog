@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'blog',
     'sorl.thumbnail',
     'ckeditor',
-    'location_field',
     'cart',
 )
 
@@ -89,6 +88,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+# AUTH_USER_MODEL = 'blog.User'
 
 DATABASES = {
     'default': {

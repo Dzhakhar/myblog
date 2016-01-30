@@ -1,7 +1,15 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+<div class="progress">
+  <div>
+    <span class='progress_1 progress_active'>Корзина</span>
+    <span class='progress_2'>Оформление заказа</span>
+    <span class='progress_3'>Завершение</span>
+  </div>
+</div>
 <div class="table_main">
-    <div class="table_wrap" style="">Шапка</div>
+    <div class="table_wrap" style="">Корзина</div>
+    <div class="cart_wrapper" style=''>
     <div class="table_head">
       <span class="table_head_item_1 table_head_item">Наименование:</span><span class="table_head_item_2 table_head_item">Цена:</span><span class="table_head_item_3 table_head_item">Количество:</span><span class="table_head_item_4 table_head_item">Итого:</span>
     </div>
@@ -26,6 +34,24 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class='itogo'>итого</div>
+    </div>
+    <div class="confirm_wrapper" style=''>
+    {% if user.is_authenticated %}
+    <span>ФИО:</span><span>{{ user.username }}</span><br>
+    <span>Email:</span><span>{{ user.email }}</span><br>
+    <span>Номер телефона:</span>
+    {% else %}
+    {% for item in cart %}
+    <div class="table_item">
+        <span class="table_item_item_1 table_item_item">{{ item.product.title }}</span><span class="table_item_item_2 table_item_item">{{ item.product.price }}</span><span class="table_item_item_3 table_item_item"><input type="number" ng-model="amount" value='{{ item.quantity }}' ng-value='{{ item.quantity }}' title="Введите число от 1 до 10" required min="1" max="10" style="padding-left: 4px; border-radius: 4px; width: 50px; outline: none; border: 2px solid #F38181; height: 20px; line-height: 20px;"></span><span class="table_item_item_4 table_item_item">{{ item.total_price }}</span><span class='remove_item'>удалить</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    </div>
+    <div class='itogo'>
+      итого
+      <span class="cart_save">Сохранить изменения</span>
+      <span class="cart_confirm">Оформить заявку</span>
+    </div>
 </div>
 {% endblock %}

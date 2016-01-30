@@ -75,3 +75,44 @@
     color: #fff;
     padding: 4px 10px 4px 10px;
 }
+
+.progress {
+  width: 960px;
+  margin: 10px auto;
+}
+
+.progress div {
+  padding: 4px 15px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  display: inline-block;
+  background: #552E5A;
+}
+
+.progress_1, .progress_2, .progress_3  {
+  display: inline-block;
+  margin-right: 15px;
+  color: #fff;
+}
+
+.progress_3 {
+  margin-right: 0 !important;
+}
+
+.progress_active {
+  color: #F38181;
+  font-weight: bold;
+}
+
+.cart_confirm, .cart_save {
+  font-size: 14px;
+  background: #F38181;
+  padding: 2px 15px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  float: right;
+  margin-left: 10px;
+  cursor: pointer;
+}

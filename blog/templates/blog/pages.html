@@ -1,4 +1,5 @@
 {% load staticfiles angular_utils%}
+<script src='{% static 'js/like.js' %}'></script>
 {% load thumbnail %}
 {% if posts.count > 0 %}
 {% for post in posts %}
@@ -22,13 +23,13 @@
             <div class="likes">
               <span>
                 {% if request.user.is_authenticated %}
-                {% if request.user|is_liked:post.id %}
+                  {% if request.user|is_liked:post.id %}
                 <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart-red.png' width='20px' alt="">
+                  {% else %}
+                  <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
+                  {% endif %}
                 {% else %}
                 <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
-                {% endif %}
-                {% else %}
-                <img class='' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
                 {% endif %}
               </span>
               <span class="likecount id{{ post.id }}">
