@@ -27,6 +27,7 @@ DEBUG = True
 THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -38,10 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
     'sorl.thumbnail',
     'ckeditor',
     'cart',
+    'blog',
 )
 
 THUMBNAIL_DEBUG = True
@@ -54,6 +55,7 @@ logging.getLogger('sorl.thumbnail').addHandler(handler)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -89,7 +91,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# AUTH_USER_MODEL = 'blog.User'
+AUTH_USER_MODEL = 'blog.User'
 
 DATABASES = {
     'default': {

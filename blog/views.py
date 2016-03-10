@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
-from cart import Cart
+from cart.cart import Cart
 from django.contrib.auth.forms import UserCreationForm
 from forms import MyRegistrationForm
 from django.utils import timezone
@@ -15,8 +15,8 @@ import requests
 from bs4 import BeautifulSoup
 from django.core.paginator import Paginator
 
-def confirm_cart(request):
-    pass
+# def confirm_cart(request):
+#     pass
 
 
 def geo_add(request):
@@ -66,27 +66,16 @@ def profile(request):
 
 
 def like(request):
-    print '0'
     post = Post.objects.filter(id = int(request.POST['i']))
-    print '1'
     f = Favourites.objects.filter(user=request.user, postt=post[0])
-    print '2'
     if f.count() == 0:
-        print '3(count == 0)'
         Favourites(user=request.user, postt=post[0], active = True).save()
     else:
-        print '3(count > 0)'
         f = Favourites.objects.filter(user=request.user, postt=post[0]).first()
-        print '4(count > 0)'
         f.active = not f.active
-        print '5(count > 0)'
         f.save()
-        print '6(count > 0) saved'
 
-    print '7'
     gf = post[0].favourites_set.filter(active=True).count()
-    print gf
-    print f.active
     return render(request, 'blog/likes.html', {'like':gf})
 
 
@@ -246,15 +235,13 @@ def add_to_cart(request, pk, q):
 
 
 def remove_from_cart(request, pk):
-    product = Post.objects.get(id=pk)
     cart = Cart(request)
-    removed_product = product
-
+    product = Post.objects.get(id=pk)
     cart.remove(product)
     if request.user.is_authenticated():
         request.user.remove_from_product_list(product)
 
-    return render(request, 'blog/cart.html', {'removed_product': removed_product})
+    return render(request, 'blog/cart.html', {'removed_product': product})
 
 
 def get_cart(request):
@@ -264,6 +251,13 @@ def get_cart(request):
             request.products = request.user.post_set.filter(user=request.user)
 
     return render(request, 'blog/cart.html', dict(cart=Cart(request)))
+
+
+
+def update_cart(request):
+    product = Post.objects.get(id=int(request.POST['id']))
+    product.quantity = request.POST['q']
+    return get_cart()
 
 
 def lenta(request):

@@ -1,42 +1,14 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
 import ast
 
 
-# class User(AbstractUser):
-#     phone_number = models.CharField(unique=True, error_messages={'unique':"Uniqqq"}, max_length=13)
-#     firstname = models.CharField(max_length=30, blank=True)
-#     lastname = models.CharField(max_length=30, blank=True)
-
-
-
-class ListField(models.TextField):
-    __metaclass__ = models.SubfieldBase
-    description = "Stores a python list"
-
-    def __init__(self, *args, **kwargs):
-        super(ListField, self).__init__(*args, **kwargs)
-
-    def to_python(self, value):
-        if not value:
-            value = []
-
-        if isinstance(value, list):
-            return value
-
-        return ast.literal_eval(value)
-
-    def get_prep_value(self, value):
-        if value is None:
-            return value
-
-        return unicode(value)
-
-    def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
-        return self.get_db_prep_value(value)
+class User(AbstractUser):
+    phone_number = models.CharField(unique=True, error_messages={'unique':"Uniqqq"}, max_length=13)
+    firstname = models.CharField(max_length=30, blank=True)
+    lastname = models.CharField(max_length=30, blank=True)
 
 
 class Category(models.Model):
@@ -67,7 +39,7 @@ class Post(models.Model):
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
     user = models.ForeignKey(User, default='', blank=True, null=True)
-    q = models.IntegerField(default='', blank=True, null=True)
+    q = models.IntegerField(default='0', blank=True, null=True)
     title = models.CharField(max_length=200)
     text = RichTextField()
     post_image = models.ImageField(upload_to="postimage/", blank=True, null=True)

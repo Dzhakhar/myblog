@@ -12,12 +12,14 @@
   <link rel="stylesheet" href="{% static 'css/dropdown-menu.css' %}">
   <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
   <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
   {% block tabsCss %}
   <link rel="stylesheet" href="{% static 'css/tabs.css' %}">
   {% endblock %}
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
   <!-- <link rel="stylesheet" href="/media/jquery.min.css"> -->
   <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src='{% static 'js/jcarousellite.js' %}'></script>
   <script src="{% static 'js/controller.js' %}"></script>
   <script src="{% static 'js/like.js' %}"></script>
   <script src="{% static 'js/comment_send.js' %}"></script>
@@ -29,9 +31,9 @@
         theMinute = theTime.getMinutes();
         $(document).ready(function(){
             if (theHour >= 7 && theHour <= 18) {
-                $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-1.png)');
+                $('body').css('background', 'url(/static/images/Untitled-1.png)');
             } else {
-                $('body').css('background', 'url(http://localhost:8000/static/images/Untitled-2.png)');
+                $('body').css('background', 'url(/static/images/Untitled-2.png)');
             }
         });
     </script>
@@ -79,7 +81,7 @@
             </div>
             <div class="search">
                 <div class="triangle triangle-4" style="z-index: 40;"></div>
-                <!-- csrf_token  -->
+                {% csrf_token %}
                 <input type="search" placeholder="Поиск по акциям" id="search" name='search'>
                 <div class="search-results">
                     <ul id="search-results"></ul>
@@ -108,10 +110,25 @@
         </ul>
     </nav>
 </div>
-
         <!-- end dropdown menu -->
         <div class="content container">
                 {% block content %}
+                {% block jCarouselLite %}
+                <div class="gallery" style='margin-top: 0;'>
+                	    <ul>
+                        <li><img src="http://placehold.it/1080x300" height="300px" width="1080px" alt=""/></li>
+
+                	      <li><img src="http://placehold.it/1080x300" height="300px" width="1080px" alt=""/></li>
+
+                	      <li><img src="http://placehold.it/1080x300" height="300px" width="1080px" alt=""/></li>
+
+                	      <li><img src="http://placehold.it/1080x300" height="300px" width="1080px" alt=""/></li>
+                	    </ul>
+                  <span class="prev"><img src="{% static 'icons/ic_keyboard_arrow_left_black_18dp_1x.png' %}" alt="Prev"></span>
+                  <span class="next"><img src="{% static 'icons/ic_keyboard_arrow_right_black_18dp_1x.png' %}" alt="Next"></span>
+                	</div>
+                  {% endblock %}
+
                     {% load thumbnail %}
 <!-- for post in posts -->
         <ul class="ul-catalog">
@@ -171,6 +188,21 @@
             <span></span>
 	        <a href="#top">наверх</a>
         </div>
+        {% block jcarousel %}
+        <script type="text/javascript">
+        jQuery(function(){
+
+jQuery(".gallery").jCarouselLite({
+
+        btnNext: ".next",
+
+        btnPrev: ".prev"
+
+    });
+
+});
+        </script>
+        {% endblock %}
     <script src="{% static 'js/button.js' %}"></script>
     <script src="{% static 'js/ajax.js' %}"></script>
     <script src="{% static 'js/category.js' %}"></script>

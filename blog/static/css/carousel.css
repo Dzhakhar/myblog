@@ -1,0 +1,32 @@
+.gallery {
+  position: relative;
+  margin: 10px auto;
+  margin-bottom: 0 !important;
+  width: 1080px;
+  max-width: 1080px;
+  overflow: hidden;
+  -webkit-border-radius:9px;
+  -moz-border-radius:9px;
+  border-radius:9px;
+  overflow: hidden;
+}
+
+.prev, .next {
+  position: absolute;
+  z-index: 40;
+  display: inline-block;
+  height: 26px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 20px;
+  top: 50%;
+  margin-top: -13px;
+}
+
+.next {
+  right: 20px;
+  top: 50%;
+  margin-top: -13px;
+}

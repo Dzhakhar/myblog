@@ -16,10 +16,12 @@ $(function(){
       return cookieValue;
   };
 
+  // alert(getCookie('csrftoken'));
+
     $('.comment_send').click(function(){
           $.ajax({
               type: 'POST',
-              url: "http://localhost:8000/comment/",
+              url: "/comment/",
               data: {
                   'comment_text': $('#comment').val(),
                   'post': parseInt($(this).attr('psi')),

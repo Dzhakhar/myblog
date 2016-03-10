@@ -24,9 +24,9 @@
               <span>
                 {% if request.user.is_authenticated %}
                   {% if request.user|is_liked:post.id %}
-                <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart-red.png' width='20px' alt="">
+                <img class='like_img' onclick='likeload()' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart-red.png' width='20px' alt="">
                   {% else %}
-                  <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
+                  <img class='like_img' onclick='likeload()' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">
                   {% endif %}
                 {% else %}
                 <img class='like_img' prt='{{ post.title }}' psi='{{ post.id }}' style='cursor:pointer' src='/media/heart.png' width='20px' alt="">

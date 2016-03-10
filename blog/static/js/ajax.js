@@ -20,7 +20,7 @@ $(function(){
         if($('#search').val() != ''){
             $.ajax({
                 type: 'POST',
-                url: "http://localhost:8000/search/",
+                url: "/search/",
                 data: {
                     'search_text': $('#search').val(),
                     'csrfmiddlewaretoken': getCookie('csrftoken')

@@ -1,6 +1,6 @@
 from .models import Post, Category, Subcategory, Favourites
 from .models import User
-from cart import Cart
+from cart.cart import Cart
 
 def categories(request):
     category = Category.objects.all()
